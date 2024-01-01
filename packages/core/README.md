@@ -7,11 +7,11 @@
   An open-source Notion-style WYSIWYG editor with AI-powered autocompletions. 
 </p>
 
-这是对novel编辑器的改进，原novel地址：
+BiYe-Novel是对Novel编辑器按自己需求的改进版本，需要的建议使用原:
 <p align="center">
+Novel:
   <a href="https://github.com/steven-tey/novel"><img src="https://img.shields.io/github/stars/steven-tey/novel?style=social" alt="Novel.sh's GitHub repo"></a>
 </p>
-<br/>
 
 ## License
 
