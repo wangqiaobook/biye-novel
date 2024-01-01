@@ -79,10 +79,10 @@
   "author": "wangqiao<wangqiaopro@163.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/steven-tey/novel.git"
+    "url": "git+https://github.com/wangqiaobook/biye-novel.git"
   },
   "bugs": {
-    "url": "https://github.com/steven-tey/novel/issues"
+    "url": "https://github.com/wangqiaobook/biye-novel/issues"
   },
   "keywords": [
     "ai",
