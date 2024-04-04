@@ -3,12 +3,12 @@ import { FC, useState } from "react";
 import {
   BoldIcon,
   ItalicIcon,
-  UnderlineIcon,
-  StrikethroughIcon,
+  // UnderlineIcon,
+  // StrikethroughIcon,
   CodeIcon,
 } from "lucide-react";
 import { NodeSelector } from "./node-selector";
-import { ColorSelector } from "./color-selector";
+// import { ColorSelector } from "./color-selector";
 import { LinkSelector } from "./link-selector";
 import { cn } from "@/lib/utils";
 
@@ -35,18 +35,18 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
       command: () => props.editor.chain().focus().toggleItalic().run(),
       icon: ItalicIcon,
     },
-    {
-      name: "underline",
-      isActive: () => props.editor.isActive("underline"),
-      command: () => props.editor.chain().focus().toggleUnderline().run(),
-      icon: UnderlineIcon,
-    },
-    {
-      name: "strike",
-      isActive: () => props.editor.isActive("strike"),
-      command: () => props.editor.chain().focus().toggleStrike().run(),
-      icon: StrikethroughIcon,
-    },
+    // {
+    //   name: "underline",
+    //   isActive: () => props.editor.isActive("underline"),
+    //   command: () => props.editor.chain().focus().toggleUnderline().run(),
+    //   icon: UnderlineIcon,
+    // },
+    // {
+    //   name: "strike",
+    //   isActive: () => props.editor.isActive("strike"),
+    //   command: () => props.editor.chain().focus().toggleStrike().run(),
+    //   icon: StrikethroughIcon,
+    // },
     {
       name: "code",
       isActive: () => props.editor.isActive("code"),
@@ -124,7 +124,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
           </button>
         ))}
       </div>
-      <ColorSelector
+      {/* <ColorSelector
         editor={props.editor}
         isOpen={isColorSelectorOpen}
         setIsOpen={() => {
@@ -132,7 +132,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
           setIsNodeSelectorOpen(false);
           setIsLinkSelectorOpen(false);
         }}
-      />
+      /> */}
     </BubbleMenu>
   );
 };

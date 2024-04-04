@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Editor as NovelEditor } from "novel";
+// import {defaultExtensions} from "novel/extensions"
 
 export default function Editor() {
   const [saveStatus, setSaveStatus] = useState("Saved");
@@ -13,7 +14,7 @@ export default function Editor() {
       </div>
       <NovelEditor
         editorProps={{
-          editable:()=>(false)
+          editable:()=>(true)
         }}
         onUpdate={() => {
           setSaveStatus("Unsaved");
