@@ -202,7 +202,6 @@ export default function Editor({
   }, [editor, defaultValue, content, hydrated, disableLocalStorage]);
 
   return (
-    <article className="prose prose-quoteless prose-neutral dark:prose-invert">
       <NovelContext.Provider
         value={{
           completionApi,
@@ -220,6 +219,5 @@ export default function Editor({
           <EditorContent editor={editor} />
         </div>
       </NovelContext.Provider>
-    </article>
   );
 }

@@ -1,6 +1,6 @@
 {
   "name": "biye-novel",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Notion-style WYSIWYG editor with AI-powered autocompletions",
   "license": "Apache-2.0",
   "main": "./dist/index.js",
