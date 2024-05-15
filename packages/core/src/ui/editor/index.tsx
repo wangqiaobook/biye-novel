@@ -12,7 +12,7 @@ import va from "@vercel/analytics";
 import { defaultEditorContent } from "./default-content";
 import { EditorBubbleMenu } from "./bubble-menu";
 import { getPrevText } from "@/lib/editor";
-import { ImageResizer } from "./extensions/image-resizer";
+// import { ImageResizer } from "./extensions/image-resizer";
 import { EditorProps } from "@tiptap/pm/view";
 import { Editor as EditorClass, Extensions } from "@tiptap/core";
 import { NovelContext } from "./provider";
@@ -202,21 +202,24 @@ export default function Editor({
   }, [editor, defaultValue, content, hydrated, disableLocalStorage]);
 
   return (
-    <NovelContext.Provider
-      value={{
-        completionApi,
-      }}
-    >
-      <div
-        onClick={() => {
-          editor?.chain().focus().run();
+    <article className="prose prose-quoteless prose-neutral dark:prose-invert">
+      <NovelContext.Provider
+        value={{
+          completionApi,
         }}
-        className={className}
       >
-        {editor && <EditorBubbleMenu editor={editor} />}
-        {editor?.isActive("image") && <ImageResizer editor={editor} />}
-        <EditorContent editor={editor} />
-      </div>
-    </NovelContext.Provider>
+        <div
+          onClick={() => {
+            editor?.chain().focus().run();
+          }}
+          className={className}
+        >
+          {editor && <EditorBubbleMenu editor={editor} />}
+          {/* 暂时不允许图片可自由伸缩 */}
+          {/* {editor?.isActive("image") && <ImageResizer editor={editor} />} */}
+          <EditorContent editor={editor} />
+        </div>
+      </NovelContext.Provider>
+    </article>
   );
 }
