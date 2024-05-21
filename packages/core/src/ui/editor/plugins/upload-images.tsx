@@ -118,7 +118,7 @@ export const handleImageUpload = (file: File) => {
         method: "POST",
         headers: {
           "content-type": file?.type || "application/octet-stream",
-          "x-vercel-filename": file?.name || "image.png",
+          // "x-vercel-filename": file?.name || "image.png", // 有这行代码有的文件上传会有问题
         },
         body: file,
       }).then(async (res) => {
@@ -134,7 +134,6 @@ export const handleImageUpload = (file: File) => {
           // No blob store configured
         } else if (res.status === 401) {
           resolve(file);
-
           throw new Error(
             "`BLOB_READ_WRITE_TOKEN` environment variable not found, reading image locally instead."
           );
