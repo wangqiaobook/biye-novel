@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Editor as NovelEditor } from "novel";
+import { Editor as NovelEditor } from "biye-novel";
 // import {defaultExtensions} from "novel/extensions"
 
 export default function Editor() {

@@ -53,6 +53,7 @@
     "use-debounce": "^9.0.3"
   },
   "devDependencies": {
-    "tailwind-config": "workspace:*"
+    "tailwind-config": "workspace:*",
+    "biye-novel": "workspace:*"
   }
 }

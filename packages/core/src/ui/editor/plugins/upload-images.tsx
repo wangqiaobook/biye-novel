@@ -1,7 +1,8 @@
-import { BlobResult } from "@vercel/blob";
 import { toast } from "sonner";
 import { EditorState, Plugin, PluginKey } from "@tiptap/pm/state";
 import { Decoration, DecorationSet, EditorView } from "@tiptap/pm/view";
+import imageCompression from 'browser-image-compression';
+import {uploadFileToCOS} from "@/lib/cos";
 
 const uploadKey = new PluginKey("upload-image");
 
@@ -110,36 +111,40 @@ export function startImageUpload(file: File, view: EditorView, pos: number) {
   });
 }
 
-export const handleImageUpload = (file: File) => {
+// 压缩图片的函数
+const compressImage = async (file: File): Promise<File> => {
+  const options = {
+    maxSizeMB: 1,
+    maxWidthOrHeight: 830,
+    useWebWorker: true,
+  };
+
+  try {
+    const compressedFile = await imageCompression(file, options);
+    return compressedFile;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Image compression failed.');
+  }
+};
+
+export const handleImageUpload = async (file: File) => {
+  // 压缩图片
+  const compressedFile = await compressImage(file);
+
   // upload to Vercel Blob
   return new Promise((resolve) => {
     toast.promise(
-      fetch("/api/upload", {
-        method: "POST",
-        headers: {
-          "content-type": file?.type || "application/octet-stream",
-          // "x-vercel-filename": file?.name || "image.png", // 有这行代码有的文件上传会有问题
-        },
-        body: file,
-      }).then(async (res) => {
-        // Successfully uploaded image
-        if (res.status === 200) {
-          const { url } = (await res.json()) as BlobResult;
+      uploadFileToCOS(compressedFile).then((res) => {
+        if(res.error || !res.url){
+          throw new Error(`Error uploading image. Please try again.`);
+        } else {
           // preload the image
           let image = new Image();
-          image.src = url;
+          image.src = res.url;
           image.onload = () => {
-            resolve(url);
+            resolve(res.url);
           };
-          // No blob store configured
-        } else if (res.status === 401) {
-          resolve(file);
-          throw new Error(
-            "`BLOB_READ_WRITE_TOKEN` environment variable not found, reading image locally instead."
-          );
-          // Unknown error
-        } else {
-          throw new Error(`Error uploading image. Please try again.`);
         }
       }),
       {

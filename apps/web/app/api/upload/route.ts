@@ -12,7 +12,7 @@ export async function POST(req: Request) {
       },
     );
   }
-
+  console.log('上传了  s一张图片')
   const file = req.body || "";
   const filename = req.headers.get("x-vercel-filename") || "file.txt";
   const contentType = req.headers.get("content-type") || "text/plain";
