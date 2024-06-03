@@ -5,11 +5,13 @@ import TiptapImage from "@tiptap/extension-image";
 import Placeholder from "@tiptap/extension-placeholder";
 import TiptapUnderline from "@tiptap/extension-underline";
 import TextStyle from "@tiptap/extension-text-style";
-import { Color } from "@tiptap/extension-color";
+// import { Color } from "@tiptap/extension-color";
 import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
 import { Markdown } from "tiptap-markdown";
 import Highlight from "@tiptap/extension-highlight";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import { common, createLowlight } from "lowlight";
 import SlashCommand from "./slash-command";
 import { InputRule } from "@tiptap/core";
 import UploadImagesPlugin from "@/ui/editor/plugins/upload-images";
@@ -112,14 +114,19 @@ export const defaultExtensions = [
       if (node.type.name === "heading") {
         return `Heading ${node.attrs.level}`;
       }
-      return "Press '/' for commands, or '++' for AI autocomplete...";
+      return "Press '/' for commands";
     },
     includeChildren: true,
   }),
   SlashCommand,
   TiptapUnderline,
   TextStyle,
-  Color,
+  // Color,
+  CodeBlockLowlight.configure({
+    // configure lowlight: common /  all / use highlightJS in case there is a need to specify certain language grammars only
+    // common: covers 37 language grammars which should be good enough in most cases
+    lowlight: createLowlight(common),
+  }),
   Highlight.configure({
     multicolor: true,
   }),

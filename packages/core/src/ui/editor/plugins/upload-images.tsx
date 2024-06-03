@@ -2,7 +2,6 @@ import { toast } from "sonner";
 import { EditorState, Plugin, PluginKey } from "@tiptap/pm/state";
 import { Decoration, DecorationSet, EditorView } from "@tiptap/pm/view";
 import imageCompression from 'browser-image-compression';
-import {uploadFileToCOS} from "@/lib/cos";
 
 const uploadKey = new PluginKey("upload-image");
 
@@ -135,16 +134,32 @@ export const handleImageUpload = async (file: File) => {
   // upload to Vercel Blob
   return new Promise((resolve) => {
     toast.promise(
-      uploadFileToCOS(compressedFile).then((res) => {
-        if(res.error || !res.url){
-          throw new Error(`Error uploading image. Please try again.`);
-        } else {
+      fetch("/api/upload", {
+        method: "POST",
+        headers: {
+          "content-type": file?.type || "application/octet-stream",
+          // "x-vercel-filename": file?.name || "image.png", // 有这行代码有的文件上传会有问题
+        },
+        body: compressedFile,
+      }).then(async (res) => {
+        // Successfully uploaded image
+        if (res.status === 200) {
+          const { url } = await res.json();
           // preload the image
           let image = new Image();
-          image.src = res.url;
+          image.src = url;
           image.onload = () => {
-            resolve(res.url);
+            resolve(url);
           };
+          // No blob store configured
+        } else if (res.status === 401) {
+          resolve(file);
+          throw new Error(
+            "`BLOB_READ_WRITE_TOKEN` environment variable not found, reading image locally instead."
+          );
+          // Unknown error
+        } else {
+          throw new Error(`Error uploading image. Please try again.`);
         }
       }),
       {

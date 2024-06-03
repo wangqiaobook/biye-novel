@@ -56,12 +56,12 @@ export const NodeSelector: FC<NodeSelectorProps> = ({
       command: () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
       isActive: () => editor.isActive("heading", { level: 3 }),
     },
-    {
-      name: "To-do List",
-      icon: CheckSquare,
-      command: () => editor.chain().focus().toggleTaskList().run(),
-      isActive: () => editor.isActive("taskItem"),
-    },
+    // {
+    //   name: "To-do List",
+    //   icon: CheckSquare,
+    //   command: () => editor.chain().focus().toggleTaskList().run(),
+    //   isActive: () => editor.isActive("taskItem"),
+    // },
     {
       name: "Bullet List",
       icon: ListOrdered,
